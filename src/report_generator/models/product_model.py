@@ -32,11 +32,14 @@ class DetailedProduct(BaseProduct):
         Relationship(
             back_populates='products',
             link_model=ProductPhysicoChemicalAnalysisLink,
+            cascade_delete=True,
         ),
     ]
     nutritional_analyses: Annotated[
-        list[NutritionalAnalysisModel], Relationship(back_populates='product')
+        list[NutritionalAnalysisModel],
+        Relationship(back_populates='product', cascade_delete=True),
     ]
     sensorial_analyses: Annotated[
-        list[SensorialAnalysisModel], Relationship(back_populates='product')
+        list[SensorialAnalysisModel],
+        Relationship(back_populates='product', cascade_delete=True),
     ]

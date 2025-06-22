@@ -60,3 +60,6 @@ class ProductService:
         )
 
         return product
+
+    def delete_product(self, product_id: int):
+        self.product_repository.delete(product_id)

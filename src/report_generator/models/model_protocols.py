@@ -21,3 +21,12 @@ class Repository(Protocol):
 
         :return: None
         """
+
+    def delete(self, id):
+        """
+        Deletes an object from the repository.
+
+        :param id: the id of the object to be deleted
+
+        :return: None
+        """

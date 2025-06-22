@@ -6,6 +6,7 @@ from report_generator.dtos.products_dtos import (
     CreateProductRequest,
     CreateSensorialAnalysisRequest,
 )
+from report_generator.models.product_model import ProductModel
 
 
 class CreateNutritionalAnalysisFactory(factory.Factory):
@@ -43,6 +44,19 @@ class CreateProductFactory(factory.Factory):
     ])
 
 
+class ProductFactory(factory.Factory):
+    class Meta:
+        model = ProductModel
+
+    name = factory.Faker('word')
+    expiration_time = factory.Faker('pyint', min_value=1, max_value=24)
+
+
 @pytest.fixture
 def create_product_factory():
     return CreateProductFactory
+
+
+@pytest.fixture
+def product_factory():
+    return ProductFactory

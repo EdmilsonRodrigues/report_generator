@@ -23,13 +23,17 @@ class PhysicoChemicalAnalysisDetailed(PhysicoChemicalAnalysisBase):
 
 class NutritionalAnalysisBase(SQLModel):
     expected_value: float
-    nutrient_id: Annotated[int | None, Field(foreign_key='nutrient.id')] = None
+    nutrient_id: Annotated[
+        int | None, Field(foreign_key='nutrient.id', ondelete='CASCADE')
+    ] = None
 
 
 class NutritionalAnalysisModel(NutritionalAnalysisBase, table=True):
     __tablename__ = 'nutritional_analysis'
     id: Annotated[int | None, Field(primary_key=True)] = None
-    product_id: Annotated[int | None, Field(foreign_key='product.id')] = None
+    product_id: Annotated[
+        int | None, Field(foreign_key='product.id', ondelete='CASCADE')
+    ] = None
 
 
 class NutritionalAnalysisSimple(NutritionalAnalysisBase):
@@ -51,7 +55,9 @@ class SensorialAnalysisBase(SQLModel):
 class SensorialAnalysisModel(SensorialAnalysisBase, table=True):
     __tablename__ = 'sensorial_analysis'
     id: Annotated[int | None, Field(primary_key=True)] = None
-    product_id: Annotated[int | None, Field(foreign_key='product.id')] = None
+    product_id: Annotated[
+        int | None, Field(foreign_key='product.id', ondelete='CASCADE')
+    ] = None
 
 
 class SensorialAnalysisSimple(SensorialAnalysisBase):
@@ -74,3 +80,8 @@ class NutrientModel(NutrientBase, table=True):
 
 class NutrientSimple(NutrientBase):
     id: int
+
+    nutritional_analyses: Annotated[
+        list[NutritionalAnalysisModel],
+        Relationship(back_populates='nutrient', cascade_delete=True),
+    ]
