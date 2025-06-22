@@ -1,19 +1,22 @@
 from collections.abc import Callable
 from functools import partial
+from typing import Any
 
 
-def inject_dependency(dependency_name: str, dependency_provider: Callable):
+def inject_dependency(
+    dependency_name: str, dependency_provider: Callable[[], Any]
+):
     """
     Injects a dependency into a function as a keyword argument.
     All non dependency arguments should be passed before the dependency.
 
+    :param dependency_name: name of the dependency
+    :type dependency_name: str
+    :param dependency_provider: function that provides the dependency
+    :type dependency_provider: Callable[[], Any]
 
-    Args:
-        dependency_name (str): name of the dependency
-        dependency_provider (Callable): function that returns the dependency
-
-    Returns:
-        Callable: decorator that injects the dependency
+    :return: decorator that injects the dependency
+    :rtype: Callable[[Callable], Callable]
     """
 
     assert callable(dependency_provider), 'dependency_provider not callable'
