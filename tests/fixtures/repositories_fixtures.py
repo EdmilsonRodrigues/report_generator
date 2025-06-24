@@ -4,10 +4,10 @@ import pytest
 
 
 class FakeRepository(UserDict):
-    def get(self, id: int):
+    def get(self, id: int):  # type: ignore
         return self.data[id]
 
-    def get_all(self, limit: int = 10, offset: int = 0):
+    def get_many(self, limit: int = 10, offset: int = 0):
         return list(self.data.values())[offset : offset + limit]
 
     def get_count(self):
@@ -18,8 +18,14 @@ class FakeRepository(UserDict):
             if getattr(obj, field) == value:
                 return obj
 
+    def get_many_by_field(self, field: str, value):
+        for obj in self.data.values():
+            if getattr(obj, field) == value:
+                yield obj
+
     def update(self, id, updated_object):
         self.data[id] = updated_object
+        return updated_object
 
     def create(self, new_object):
         new_object.id = list(self.values())[-1].id + 1 if self.values() else 1
@@ -32,6 +38,10 @@ class FakeRepository(UserDict):
 
     def delete(self, id):
         del self.data[id]
+
+    def delete_many(self, ids):
+        for id in ids:
+            self.data.pop(id, None)
 
 
 @pytest.fixture

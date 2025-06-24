@@ -5,6 +5,7 @@ from report_generator.dtos.products_dtos import (
     CreateNutritionalAnalysisRequest,
     CreateProductRequest,
     CreateSensorialAnalysisRequest,
+    UpdateProductRequest,
 )
 from report_generator.models.product_model import ProductModel
 
@@ -33,14 +34,31 @@ class CreateProductFactory(factory.Factory):
 
     name = factory.Faker('word')
     expiration_time = factory.Faker('pyint', min_value=1, max_value=24)
-    physico_chemical_anaylyses = factory.List([
+    physico_chemical_analyses = factory.List([
         factory.Faker('pyint', min_value=1) for _ in range(4)
     ])
-    nutritional_analysis = factory.List([
+    nutritional_analyses = factory.List([
         CreateNutritionalAnalysisFactory() for _ in range(10)
     ])
-    sensorial_analysis = factory.List([
+    sensorial_analyses = factory.List([
         CreateSensorialAnalysisFactory() for _ in range(4)
+    ])
+
+
+class UpdateProductFactory(factory.Factory):
+    class Meta:
+        model = UpdateProductRequest
+
+    name = factory.Faker('word')
+    expiration_time = factory.Faker('pyint', min_value=1, max_value=24)
+    physico_chemical_analyses = factory.List([
+        factory.Faker('pyint', min_value=1) for _ in range(4)
+    ])
+    nutritional_analyses = factory.List([
+        factory.Faker('pyint', min_value=1) for _ in range(10)
+    ])
+    sensorial_analyses = factory.List([
+        factory.Faker('pyint', min_value=1) for _ in range(4)
     ])
 
 
@@ -55,6 +73,11 @@ class ProductFactory(factory.Factory):
 @pytest.fixture
 def create_product_factory():
     return CreateProductFactory
+
+
+@pytest.fixture
+def update_product_factory():
+    return UpdateProductFactory
 
 
 @pytest.fixture

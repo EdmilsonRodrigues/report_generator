@@ -6,9 +6,17 @@ from pydantic import BaseModel
 class CreateProductRequest(BaseModel):
     name: str
     expiration_time: int
-    physico_chemical_anaylyses: list[int]
-    nutritional_analysis: list[CreateNutritionalAnalysisRequest]
-    sensorial_analysis: list[CreateSensorialAnalysisRequest]
+    physico_chemical_analyses: list[int]
+    nutritional_analyses: list[CreateNutritionalAnalysisRequest]
+    sensorial_analyses: list[CreateSensorialAnalysisRequest]
+
+
+class UpdateProductRequest(BaseModel):
+    name: str
+    expiration_time: int
+    physico_chemical_analyses: list[int]
+    nutritional_analyses: list[int]
+    sensorial_analyses: list[int]
 
 
 class CreateNutritionalAnalysisRequest(BaseModel):
